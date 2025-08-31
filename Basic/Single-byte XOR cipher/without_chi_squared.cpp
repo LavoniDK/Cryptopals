@@ -1,14 +1,12 @@
-#include <iostream>
-#include <vector>
-#include <string>
-#include <map>
-#include <stdexcept>
-#include <cctype>
+# include <iostream>
+# include <vector>
+# include <string>
+# include <map>
+# include <stdexcept>
+# include "hex.h"
 
 // --- Function Prototypes ---
-std::vector<unsigned char> hex_to_bytes(const std::string& hex);
-unsigned int hex_char_to_int(unsigned char c);
-std::vector<unsigned char> constant_XOR(const std::vector<unsigned char>& data, unsigned char key);
+std::vector<BYTE> constant_XOR(const std::vector<BYTE>& data, BYTE key);
 double get_plaintext_score(const std::string& pt);
 
 
@@ -24,17 +22,22 @@ std::map<char, double> letter_frequencies = {
 };
 
 
-int main() {
+int main(int argc, char* argv[]) {
     
-    std::string ciphertext_hex = "1b37373331363f78151b7f2b783431333d78397828372d363c78373e783a393b3736";
-    std::vector<unsigned char> ciphertext_bytes = hex_to_bytes(ciphertext_hex);
+    if (argc != 2) {
+        std::cerr << "Error: you need to provide exactly one operand" << std::endl;
+        return 1; 
+    }
+     
+    std::string ciphertext_hex = argv[1];  
+    std::vector<BYTE> ciphertext_bytes = hex_to_bytes(ciphertext_hex);
     
     double best_score = -1.0;
     std::string best_plaintext = "";
-    unsigned char best_key = 0;
+    BYTE best_key = 0;
 
     for (int key = 0; key <= 255; ++key) {
-        std::vector<unsigned char> plaintext_bytes = constant_XOR(ciphertext_bytes, static_cast<unsigned char>(key));
+        std::vector<BYTE> plaintext_bytes = constant_XOR(ciphertext_bytes, static_cast<BYTE>(key));
         std::string plaintext_str(plaintext_bytes.begin(), plaintext_bytes.end());
 
         double score = get_plaintext_score(plaintext_str);
@@ -42,7 +45,7 @@ int main() {
         if (score > best_score) {
             best_plaintext = plaintext_str;
             best_score = score;
-            best_key = static_cast<unsigned char>(key);
+            best_key = static_cast<BYTE>(key);
         }
     }
     std::cout << "Plaintext found: " << best_plaintext << '\n'
@@ -69,9 +72,9 @@ double get_plaintext_score(const std::string& pt) {
 } 
 
 
-std::vector<unsigned char> constant_XOR(const std::vector<unsigned char>& data, const unsigned char key) {
+std::vector<BYTE> constant_XOR(const std::vector<BYTE>& data, const BYTE key) {
 
-    std::vector<unsigned char> product;
+    std::vector<BYTE> product;
     product.reserve(data.size());
  
     for (size_t i = 0; i < data.size(); i++) {
@@ -81,24 +84,3 @@ std::vector<unsigned char> constant_XOR(const std::vector<unsigned char>& data, 
     return product;
 }
 
-std::vector<unsigned char> hex_to_bytes(const std::string& hex) {
-    if (hex.length() % 2 != 0) {
-        throw std::invalid_argument("Hex string must have an even number of characters.");
-    }
-
-    std::vector<unsigned char> bytes;
-    bytes.reserve(hex.length() / 2);
-    for (size_t i = 0; i < hex.length(); i += 2) {
-        int high = hex_char_to_int(hex[i]);
-        int low = hex_char_to_int(hex[i + 1]);
-        bytes.push_back((high << 4) | low);
-    }
-    return bytes;
-}
-
-unsigned int hex_char_to_int(unsigned char c) {
-    if (c >= '0' && c <= '9') return c - '0';
-    if (c >= 'a' && c <= 'f') return c - 'a' + 10;
-    if (c >= 'A' && c <= 'F') return c - 'A' + 10;
-    throw std::invalid_argument("Invalid hexadecimal character.");
-}

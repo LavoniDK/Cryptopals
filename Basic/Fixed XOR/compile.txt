@@ -1,0 +1,5 @@
+g++ -std=c++17 -Wall -Wextra \
+-I../../Utils/Converter/ \
+-o fixed_xor \
+fixed_xor.cpp \
+../../Utils/Converter/hex.cpp

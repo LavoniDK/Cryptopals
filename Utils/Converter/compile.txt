@@ -1,0 +1,1 @@
+g++ -std=c++17 -Wall -Wextra -o converter main.cpp hex.cpp base64.cpp ascii.cpp

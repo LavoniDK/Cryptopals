@@ -1,0 +1,6 @@
+g++ -std=c++17 -Wall -Wextra \
+-I../../Utils/Converter/ \
+-o repeating_xor \
+repeating_xor.cpp \
+../../Utils/Converter/hex.cpp \
+../../Utils/Converter/ascii.cpp

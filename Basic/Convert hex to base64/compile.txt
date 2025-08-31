@@ -1,0 +1,5 @@
+g++ -std=c++17 -Wall -Wextra \
+-I../../Utils/Converter/ \
+-o hex_to_b64 \
+hex_to_b64.cpp \
+../../Utils/Converter/hex.cpp ../../Utils/Converter/base64.cpp 
