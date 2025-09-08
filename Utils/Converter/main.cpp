@@ -3,10 +3,11 @@
 #include <vector>
 #include <stdexcept>
 
-// Include the headers for all the conversion modules
 #include "hex.h"
 #include "base64.h"
 #include "ascii.h"
+
+using BYTE = unsigned char
 
 void print_usage() {
     std::cerr << "Usage: ./converter <input_format> <output_format> <data>" << std::endl;

@@ -1,8 +1,9 @@
 g++ -std=c++17 -Wall -Wextra \
 -I../../Utils/Converter/ \
 -I../../Utils/ByteVector/ \
--o repeating_xor \
-repeating_xor.cpp \
+-o detect_aes_ecb \
+detect_aes_ecb.cpp \
+-lcryptopp \
 ../../Utils/Converter/hex.cpp \
 ../../Utils/Converter/ascii.cpp \
-../../Utils/ByteVector/xor.cpp
+../../Utils/ByteVector/linalg.cpp

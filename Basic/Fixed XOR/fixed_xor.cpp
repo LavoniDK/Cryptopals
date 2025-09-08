@@ -1,15 +1,12 @@
-# include <iostream>
-# include <string>
-# include <vector>
-# include <stdexcept>
-# include "hex.h"
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stdexcept>
 
-// --- Function Prototypes ---
-unsigned int hex_char_to_int(unsigned char c);
-std::vector<unsigned char> hex_to_bytes(const std::string& hex);
-std::string bytes_to_hex(const std::vector<unsigned char>& bytes); 
-std::vector<unsigned char> xor_of_bytes(const std::vector<unsigned char>& buf1, const std::vector<unsigned char>& buf2);
+#include "hex.h"
+#include "xor.h"
 
+using BYTE = unsigned char;
 
 // --- Main Program ---
 int main(int argc, char* argv[]) {
@@ -26,7 +23,7 @@ int main(int argc, char* argv[]) {
         std::vector<unsigned char> bytes1 = hex_to_bytes(hex_buf1);
         std::vector<unsigned char> bytes2 = hex_to_bytes(hex_buf2);
         
-        std::vector<unsigned char> product = xor_of_bytes(bytes1, bytes2);
+        std::vector<unsigned char> product = fixed_xor(bytes1, bytes2);
         
         std::cout << "Result: " << bytes_to_hex(product) << '\n';   
    
@@ -36,22 +33,3 @@ int main(int argc, char* argv[]) {
     }
     return 0;
 }
-
-
-// --- Function Implementations ---
-
-std::vector<unsigned char> xor_of_bytes(const std::vector<unsigned char>& buf1, const std::vector<unsigned char>& buf2) {
-    if (buf1.size() != buf2.size()) {
-        throw std::invalid_argument("Input buffers for XOR must have the same length.");
-    }   
-
-    std::vector<unsigned char> product;
-    product.reserve(buf1.size());
- 
-    for (size_t i = 0; i < buf1.size(); i++) {
-        product.push_back(buf1[i] ^ buf2[i]);
-    }
-
-    return product;
-}
-

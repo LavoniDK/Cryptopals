@@ -1,0 +1,8 @@
+g++ -std=c++17 -Wall -Wextra \
+-I../../Utils/Converter/ \
+-o aes_ecb \
+aes_ecb.cpp \
+-lcryptopp \
+../../Utils/Converter/ascii.cpp ../../Utils/Converter/base64.cpp \
+
+

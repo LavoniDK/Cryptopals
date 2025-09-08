@@ -1,11 +1,12 @@
 #include <iostream>
 #include <string>
 #include <vector>
+
 #include "hex.h"
 #include "ascii.h"
+#include "xor.h"
 
-// --- Function Prototypes ---
-std::vector<BYTE> repeating_xor(const std::string& pt, const std::string& key);
+using BYTE = unsigned char;
 
 // --- Main Program ---
 int main(int argc, char* argv[]) {
@@ -15,28 +16,11 @@ int main(int argc, char* argv[]) {
         return 1;
     }
 
-    std::string plaintext = argv[1];
+    std::string pt_str = argv[1];
     std::string key = argv[2];
 
-    std::vector<BYTE> ciphertext_bytes = repeating_xor(plaintext, key);
-    std::string ciphertext_hex = bytes_to_hex(ciphertext_bytes);
-    std::cout << ciphertext_hex << std::endl;
+    std::vector<BYTE> ct_bytes = repeating_xor(ascii_to_bytes(pt_str), ascii_to_bytes(key));
+    std::string ct_hex = bytes_to_hex(ct_bytes);
+    std::cout << ct_hex << std::endl;
     return 0;
-}
-
-// --- Function Implementations ---
-
-std::vector<BYTE> repeating_xor(const std::string& pt, const std::string& key) {
-    
-    std::vector<BYTE> pt_bytes = ascii_to_bytes(pt);
-    std::vector<BYTE> key_bytes = ascii_to_bytes(key);
-    
-    size_t len = pt_bytes.size();
-    std::vector<BYTE> result; 
-    result.reserve(len);
-
-    for (size_t i = 0; i < len; i++) {
-        result.push_back(pt_bytes[i] ^ key_bytes[i % key_bytes.size()]);
-    }
-    return result;
 }

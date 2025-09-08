@@ -1,12 +1,14 @@
-# include <iostream>
-# include <vector>
-# include <string>
-# include <map>
-# include <stdexcept>
-# include "hex.h"
+#include <iostream>
+#include <vector>
+#include <string>
+#include <map>
+#include <stdexcept>
 
-// --- Function Prototypes ---
-std::vector<BYTE> constant_XOR(const std::vector<BYTE>& data, BYTE key);
+#include "hex.h"
+#include "xor.h"
+
+using BYTE = unsigned char;
+
 double get_plaintext_score(const std::string& pt);
 
 
@@ -37,7 +39,7 @@ int main(int argc, char* argv[]) {
     BYTE best_key = 0;
 
     for (int key = 0; key <= 255; ++key) {
-        std::vector<BYTE> plaintext_bytes = constant_XOR(ciphertext_bytes, static_cast<BYTE>(key));
+        std::vector<BYTE> plaintext_bytes = constant_xor(ciphertext_bytes, static_cast<BYTE>(key));
         std::string plaintext_str(plaintext_bytes.begin(), plaintext_bytes.end());
 
         double score = get_plaintext_score(plaintext_str);
@@ -70,17 +72,3 @@ double get_plaintext_score(const std::string& pt) {
     }
     return total_score; 
 } 
-
-
-std::vector<BYTE> constant_XOR(const std::vector<BYTE>& data, const BYTE key) {
-
-    std::vector<BYTE> product;
-    product.reserve(data.size());
- 
-    for (size_t i = 0; i < data.size(); i++) {
-        product.push_back(data[i] ^ key);
-    }
-
-    return product;
-}
-

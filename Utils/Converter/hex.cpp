@@ -1,11 +1,12 @@
-# include "hex.h"
-# include <stdexcept>
-# include <vector>
-# include <string>
+#include <stdexcept>
+#include <vector>
+#include <string>
+
+#include "hex.h"
+
+using BYTE = unsigned char;
 
 // --- Function Prototypes ---
-std::string bytes_to_hex(const std::vector<BYTE>& bytes);
-std::vector<BYTE> hex_to_bytes(const std::string& hex);
 inline char int_to_hex(BYTE i);
 int hex_char_to_int(char c);
 

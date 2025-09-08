@@ -1,10 +1,7 @@
-# include "ascii.h"
-# include <vector>
-# include <string>
+#include <vector>
+#include <string>
 
-// --- Function Prototypes ---
-std::string bytes_to_ascii(const std::vector<BYTE>& bytes);
-std::vector<BYTE> ascii_to_bytes(const std::string& ascii);
+#include "ascii.h"
 
 // --- Function Implementations ---
 std::string bytes_to_ascii(const std::vector<BYTE>& bytes) {

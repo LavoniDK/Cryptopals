@@ -1,10 +1,13 @@
-# include <iostream>
-# include <string>
-# include <vector>
-# include <stdexcept>
-# include <iterator> 
-# include "hex.h"
-# include "base64.h" 
+#include <iostream>
+#include <string>
+#include <vector>
+#include <stdexcept>
+#include <iterator> 
+
+#include "hex.h"
+#include "base64.h" 
+
+using BYTE = unsigned char;
 
 int main(int argc, char* argv[]) {
     // --- ARGUMENT PARSING ---

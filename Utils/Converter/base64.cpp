@@ -1,12 +1,13 @@
-# include "base64.h"
-# include <vector>
-# include <string>
-# include <stdexcept>
-# include <iterator>
+#include <vector>
+#include <string>
+#include <stdexcept>
+#include <iterator>
+
+#include "base64.h"
+
+using BYTE = unsigned char;
 
 // --- Function Prototypes ---
-std::string bytes_to_base64(const std::vector<BYTE>& bytes, bool enable_padding);
-std::vector<BYTE> base64_to_bytes(const std::string& b64);
 char int_to_base64_char(unsigned int x);
 int base64_char_to_int(char c);
 
