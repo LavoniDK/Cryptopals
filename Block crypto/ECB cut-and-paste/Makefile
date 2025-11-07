@@ -1,8 +1,8 @@
 CXX := g++
 CXXFLAGS := -std=c++17 -Wall -Wextra
-INCLUDES := ../../Utils/Converter/
+INCLUDES := -I../../Utils/Converter/ -I../../Utils/ByteVector/
 LIBS := -lssl -lcrypto
-OWN_LIBS := ../../Utils/Converter/ascii.cpp
+OWN_LIBS := ../../Utils/Converter/ascii.cpp ../../Utils/ByteVector/linalg.cpp
 SRC := ecb_cut.cpp
 OUT := test
 
@@ -11,6 +11,6 @@ OUT := test
 #   make run ARGS="AAAAAAAAAAAAAAAA"
 
 run:
-	$(CXX) $(CXXFLAGS) -I$(INCLUDES) -o $(OUT) $(SRC) $(OWN_LIBS) $(LIBS)
+	$(CXX) $(CXXFLAGS) $(INCLUDES) -o $(OUT) $(SRC) $(OWN_LIBS) $(LIBS)
 	./$(OUT) "$(ARGS)"
 	rm ./$(OUT)
